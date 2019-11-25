@@ -5,6 +5,7 @@ const Store = require("electron-store");
 const store = new Store();
 const config = require("./config");
 const WebSocket = require("ws");
+const is = require('electron-is');
 let ws;
 let rrbank = "north";
 
@@ -14,6 +15,8 @@ let firstdata = null;
 let firstload = true;
 let wsdead = null;
 let pingit = null;
+
+let OsPostfix = is.macOS()?"-mac":"";
 
 // Shut down if this is loading during install/uninstall process
 if (require("electron-squirrel-startup")) return app.quit();
@@ -32,7 +35,7 @@ function startup() {
 	connectws();
 	
 	// Put in system tray
-	const iconPath = path.join(__dirname, "icons/trayunknown.png");
+	const iconPath = path.join(__dirname, "icons/trayunknown"+OsPostfix+".png");
 	appIcon = new Tray(iconPath);
 
 	const contextMenu = Menu.buildFromTemplate([
@@ -134,7 +137,7 @@ function connectws() {
 
 function reconnectws() {
 	// Show that we no longer know the status
-	appIcon.setImage(path.join(__dirname, "icons/trayunknown.png"));
+	appIcon.setImage(path.join(__dirname, "icons/trayunknown"+OsPostfix+".png"));
 	
 	// Clear timeouts, if any
 	clearTimeout(pingit);
@@ -181,7 +184,7 @@ function msgreceived(data) {
 	}
 	
 	// Set tray icon
-	appIcon.setImage(path.join(__dirname, "icons/tray" + firstopen + ".png"));
+	appIcon.setImage(path.join(__dirname, "icons/tray" + firstopen + OsPostfix+".png"));
 	
 	// Send to renderer process
 	mainWindow.webContents.send("asynchronous-message", data)

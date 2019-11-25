@@ -20,6 +20,7 @@
     "electron": "^7.0.0"
   },
   "dependencies": {
+    "electron-is": "^3.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^5.0.0",
     "ws": "^7.2.0"
@@ -27,18 +28,18 @@
   "config": {
     "forge": {
       "packagerConfig": {
-		"win32metadata":{
+        "win32metadata": {
           "FileDescription": "9thWonder Denver Restroom Monitor",
           "ProductName": "Restroom Monitor",
           "CompanyName": "9thWonder"
         }
-	  },
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
             "name": "restroom_monitor",
-			"icon": "icons/windows.ico"
+            "icon": "icons/windows.ico"
           }
         },
         {
